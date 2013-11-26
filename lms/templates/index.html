@@ -69,8 +69,12 @@
   </header>
   <section class="container">
     <section class="highlighted-courses">
+      ## Disable university partner logos and sites for non-edX sites
+      % if not self.theme_enabled():
+        </section>
+      % endif
 
-      % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
+      % if settings.MITX_FEATURES.get('COURSES_ARE_BROWSABLE'):
         <section class="courses">
             <ul class="courses-listing">
             %for course in courses:
