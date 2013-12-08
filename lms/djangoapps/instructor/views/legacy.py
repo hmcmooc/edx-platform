@@ -34,23 +34,26 @@ from bulk_email.models import CourseEmail, CourseAuthorization
 from courseware import grades
 from courseware.access import has_access
 from courseware.courses import get_course_with_access, get_cms_course_link
-from courseware.roles import CourseStaffRole, CourseInstructorRole, CourseBetaTesterRole
+from courseware.roles import (
+    CourseStaffRole, CourseInstructorRole, CourseBetaTesterRole, GlobalStaff
+)
 from courseware.models import StudentModule
-from django_comment_common.models import (Role,
-                                          FORUM_ROLE_ADMINISTRATOR,
-                                          FORUM_ROLE_MODERATOR,
-                                          FORUM_ROLE_COMMUNITY_TA)
+from django_comment_common.models import (
+    Role, FORUM_ROLE_ADMINISTRATOR, FORUM_ROLE_MODERATOR, FORUM_ROLE_COMMUNITY_TA
+)
 from django_comment_client.utils import has_forum_access
 from instructor.offline_gradecalc import student_grades, offline_grades_available
 from instructor.views.tools import strip_if_string
-from instructor_task.api import (get_running_instructor_tasks,
-                                 get_instructor_task_history,
-                                 submit_rescore_problem_for_all_students,
-                                 submit_rescore_problem_for_student,
-                                 submit_reset_problem_attempts_for_all_students,
-                                 submit_bulk_course_email)
+from instructor_task.api import (
+    get_running_instructor_tasks,
+    get_instructor_task_history,
+    submit_rescore_problem_for_all_students,
+    submit_rescore_problem_for_student,
+    submit_reset_problem_attempts_for_all_students,
+    submit_bulk_course_email
+)
 from instructor_task.views import get_task_completion_info
-from mitxmako.shortcuts import render_to_response, render_to_string
+from edxmako.shortcuts import render_to_response, render_to_string
 from psychometrics import psychoanalyze
 from student.models import CourseEnrollment, CourseEnrollmentAllowed, unique_id_for_user
 from student.views import course_from_id
@@ -133,8 +136,10 @@ def instructor_dashboard(request, course_id):
         else:
             response = file_pointer
         writer = csv.writer(response, dialect='excel', quotechar='"', quoting=csv.QUOTE_ALL)
-        writer.writerow(datatable['header'])
+        encoded_row = [unicode(s).encode('utf-8') for s in datatable['header']]
+        writer.writerow(encoded_row)
         for datarow in datatable['data']:
+            # 's' here may be an integer, float (eg score) or string (eg student name)
             encoded_row = [unicode(s).encode('utf-8') for s in datarow]
             writer.writerow(encoded_row)
         return response
@@ -180,7 +185,7 @@ def instructor_dashboard(request, course_id):
     action = request.POST.get('action', '')
     use_offline = request.POST.get('use_offline_grades', False)
 
-    if settings.MITX_FEATURES['ENABLE_MANUAL_GIT_RELOAD']:
+    if settings.FEATURES['ENABLE_MANUAL_GIT_RELOAD']:
         if 'GIT pull' in action:
             data_dir = course.data_dir
             log.debug('git pull {0}'.format(data_dir))
@@ -766,7 +771,7 @@ def instructor_dashboard(request, course_id):
         msg += "<br/><font color='orange'>Grades from %s</font>" % offline_grades_available(course_id)
 
     # generate list of pending background tasks
-    if settings.MITX_FEATURES.get('ENABLE_INSTRUCTOR_BACKGROUND_TASKS'):
+    if settings.FEATURES.get('ENABLE_INSTRUCTOR_BACKGROUND_TASKS'):
         instructor_tasks = get_running_instructor_tasks(course_id)
     else:
         instructor_tasks = None
@@ -794,7 +799,7 @@ def instructor_dashboard(request, course_id):
     # 1. Feature flag is on
     # 2. We have explicitly enabled email for the given course via django-admin
     # 3. It is NOT an XML course
-    if settings.MITX_FEATURES['ENABLE_INSTRUCTOR_EMAIL'] and \
+    if settings.FEATURES['ENABLE_INSTRUCTOR_EMAIL'] and \
        CourseAuthorization.instructor_email_enabled(course_id) and is_studio_course:
         show_email_tab = True
 
@@ -805,7 +810,7 @@ def instructor_dashboard(request, course_id):
 
     # disable buttons for large courses
     disable_buttons = False
-    max_enrollment_for_buttons = settings.MITX_FEATURES.get("MAX_ENROLLMENT_INSTR_BUTTONS")
+    max_enrollment_for_buttons = settings.FEATURES.get("MAX_ENROLLMENT_INSTR_BUTTONS")
     if max_enrollment_for_buttons is not None:
         disable_buttons = enrollment_number > max_enrollment_for_buttons
 
@@ -841,7 +846,7 @@ def instructor_dashboard(request, course_id):
         'disable_buttons': disable_buttons
     }
 
-    if settings.MITX_FEATURES.get('ENABLE_INSTRUCTOR_BETA_DASHBOARD'):
+    if settings.FEATURES.get('ENABLE_INSTRUCTOR_BETA_DASHBOARD'):
         context['beta_dashboard_url'] = reverse('instructor_dashboard_2', kwargs={'course_id': course_id})
 
     return render_to_response('courseware/instructor_dashboard.html', context)
@@ -856,9 +861,9 @@ def _do_remote_gradebook(user, course, action, args=None, files=None):
         msg = "No remote gradebook defined in course metadata"
         return msg, {}
 
-    rgurl = settings.MITX_FEATURES.get('REMOTE_GRADEBOOK_URL', '')
+    rgurl = settings.FEATURES.get('REMOTE_GRADEBOOK_URL', '')
     if not rgurl:
-        msg = "No remote gradebook url defined in settings.MITX_FEATURES"
+        msg = "No remote gradebook url defined in settings.FEATURES"
         return msg, {}
 
     rgname = rg.get('name', '')

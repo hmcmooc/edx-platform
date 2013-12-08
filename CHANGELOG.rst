@@ -5,6 +5,46 @@ These are notable changes in edx-platform.  This is a rolling list of changes,
 in roughly chronological order, most recent first.  Add your entries at or near
 the top.  Include a label indicating the component affected.
 
+Common: Switch from mitx.db to edx.db for sqlite databases. This will effectively
+  reset state for local instances of the code, unless you manually rename your
+  mitx.db file to edx.db.
+
+Blades: Video Transcripts: Fix clear and download buttons. BLD-438.
+
+Common: Switch over from MITX_FEATURES to just FEATURES. To override items in
+  the FEATURES dict, the environment variable you must set to do so is also
+  now called FEATURES instead of MITX_FEATURES.
+
+LMS: Change the forum role granted to global staff on enrollment in a
+course. Previously, staff were given the Moderator role; now, they are
+given the Student role.
+
+Blades: Fix Numerical input to support mathematical operations. BLD-525.
+
+Blades: Improve calculator's tooltip accessibility. Add possibility to navigate
+  through the hints via arrow keys. BLD-533.
+
+LMS: Add feature for providing background grade report generation via Celery
+  instructor task, with reports uploaded to S3. Feature is visible on the beta
+  instructor dashboard. LMS-58
+
+Blades: Added grading support for LTI module. LTI providers can now grade
+student's work and send edX scores. OAuth1 based authentication
+implemented. BLD-384.
+
+LMS: Beta-tester status is now set on a per-course-run basis, rather than being
+  valid across all runs with the same course name. Old group membership will
+  still work across runs, but new beta-testers will only be added to a single
+  course run.
+
+Blades: Enabled several Video Jasmine tests. BLD-463.
+
+Studio: Continued modification of Studio pages to follow a RESTful framework.
+includes Settings pages, edit page for Subsection and Unit, and interfaces
+for updating xblocks (xmodules) and getting their editing HTML.
+
+LMS: Improve accessibility of inline discussions in courseware.
+
 Blades: Put 2nd "Hide output" button at top of test box & increase text size for
 code response questions. BLD-126.
 
@@ -12,7 +52,11 @@ Blades: Update the calculator hints tooltip with full information. BLD-400.
 
 Blades: Fix transcripts 500 error in studio (BLD-530)
 
-Blades: Allow multiple strings as the correct answer to a string response question. BLD-474.
+LMS: Add error recovery when a user loads or switches pages in an
+inline discussion.
+
+Blades: Allow multiple strings as the correct answer to a string response
+question. BLD-474.
 
 Blades: a11y - Videos will alert screenreaders when the video is over.
 
@@ -40,7 +84,8 @@ text like with bold or italics. (BLD-449)
 LMS: Beta instructor dashboard will only count actively enrolled students for
 course enrollment numbers.
 
-Blades: Fix speed menu that is not rendered correctly when YouTube is unavailable. (BLD-457).
+Blades: Fix speed menu that is not rendered correctly when YouTube is
+unavailable. (BLD-457).
 
 LMS: Users with is_staff=True no longer have the STAFF label appear on
 their forum posts.
@@ -58,6 +103,9 @@ key in course settings. (BLD-426)
 
 Blades: Fix bug when the speed can only be changed when the video is playing.
 
+LMS: The dialogs on the wiki "changes" page are now accessible to screen
+readers.  Now all wiki pages have been made accessible. (LMS-1337)
+
 LMS: Change bulk email implementation to use less memory, and to better handle
 duplicate tasks in celery.
 
@@ -74,8 +122,8 @@ client error are correctly passed through to the client.
 LMS: Improve performance of page load and thread list load for
 discussion tab
 
-LMS: The wiki markup cheatsheet dialog is now accessible to people with
-disabilites.  (LMS-1303)
+LMS: The wiki markup cheatsheet dialog is now accessible to screen readers.
+(LMS-1303)
 
 Common: Add skip links for accessibility to CMS and LMS. (LMS-1311)
 

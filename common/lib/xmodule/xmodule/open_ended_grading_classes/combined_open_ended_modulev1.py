@@ -13,7 +13,7 @@ from .combined_open_ended_rubric import CombinedOpenEndedRubric, GRADER_TYPE_IMA
 from xmodule.open_ended_grading_classes.peer_grading_service import PeerGradingService, MockPeerGradingService, GradingServiceError
 from xmodule.open_ended_grading_classes.openendedchild import OpenEndedChild
 
-log = logging.getLogger("mitx.courseware")
+log = logging.getLogger("edx.courseware")
 
 # Set the default number of max attempts.  Should be 1 for production
 # Set higher for debugging/testing
@@ -93,7 +93,6 @@ class CombinedOpenEndedV1Module():
         Definition file should have one or many task blocks, a rubric block, and a prompt block.  See DEFAULT_DATA in combined_open_ended_module for a sample.
 
         """
-
         self.instance_state = instance_state
         self.display_name = instance_state.get('display_name', "Open Ended")
 

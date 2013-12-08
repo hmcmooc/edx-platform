@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
-from mitxmako.shortcuts import render_to_response, render_to_string
+from edxmako.shortcuts import render_to_response, render_to_string
 
 from xmodule_modifiers import replace_static_urls, wrap_xblock
 from xmodule.error_module import ErrorDescriptor
@@ -88,7 +88,7 @@ class PreviewModuleSystem(ModuleSystem):  # pylint: disable=abstract-method
     """
     An XModule ModuleSystem for use in Studio previews
     """
-    def handler_url(self, block, handler_name, suffix='', query=''):
+    def handler_url(self, block, handler_name, suffix='', query='', thirdparty=False):
         return handler_prefix(block, handler_name, suffix) + '?' + query
 
 
