@@ -2,7 +2,7 @@ header.global {
   border-bottom: 1px solid $m-gray;
   box-shadow: 0 1px 5px 0 rgba(0,0,0, 0.1);
   background: $header-bg;
-  height: 76px;
+  height: 65px;
   position: relative;
   width: 100%;
   z-index: 10;
@@ -10,7 +10,7 @@ header.global {
   nav {
     @include clearfix;
     height: 40px;
-    margin: 0 auto;
+    margin: -15px auto;
     padding: 18px 10px 0px;
     max-width: grid-width(12);
     min-width: 760px;
