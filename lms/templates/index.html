@@ -56,6 +56,7 @@
     <section class="highlighted-courses">
       ## Disable university partner logos and sites for non-edX sites
       % if not self.theme_enabled():
+	<h2>${_('Explore free courses from {span_start}{platform_name}{span_end}').format(platform_name="MuddX", span_start='<span class="edx">', span_end='</span>')}</h2>
       % endif
 
       % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
