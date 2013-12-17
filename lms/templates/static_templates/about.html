@@ -4,7 +4,7 @@
 
 <%inherit file="../main.html" />
 
-<%block name="title"><title>${_("About {edX}").format(edX="edX")}</title></%block>
+<%block name="title"><title>${_("About {muddX}").format(muddX="MuddX")}</title></%block>
 
 <section class="container about">
   <nav>
@@ -21,6 +21,19 @@
     ##   </div>
     ##   <h2 class="mission-quote">&ldquo;${_('The mission of <span class="edx">{edX}</span> is to enhance human fulfillment worldwide through online ## learning, transforming education in quality, efficiency and scale through technology and research, for the benefit of campus-based ## students and the worldwide community of online learners.').format(edX="edX")}&rdquo;</h2>
     ## </div>
+
+    <section class="message left">
+      <div class="photo">
+        <img src="${static.url('images/university/mudd/about-mudd.jpg')}">
+      </div>
+      <article>
+      <h2>${_('About {span_start}{MuddX}{span_end}'.format(span_start='<span class="edx">', span_end='</span>', MuddX="MuddX"))}</h2>
+        <p>${_("{muddX} brings the best of education to students and educators of all ages anywhere in the world, wherever there is Internet access. {muddX}'s free online MOOCs are interactive and subjects include computer science, physics, and mathematics.").format(muddX="MuddX")}</p>
+        <p>${_("Our name is Mudd, and we're proud of it. We're one of the premier engineering, science and mathematics colleges in the nation. We're also unique because we are a liberal arts college. Aren't engineering, science and mathematics mutually exclusive of the liberal arts? Maybe at some places, but not at HMC.").format(muddX="MuddX")}</p>
+        <p>${_("We educate engineers, scientists and mathematicians who become leaders in their fields and have a clear understanding of the impact their work has on society.").format(muddX="MuddX")}</p>
+      </article>
+      <hr class="fade-right-hr-divider">
+    </section>
 
     <section class="message left">
       <div class="photo">
