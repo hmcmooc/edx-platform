@@ -186,7 +186,7 @@ def get_email_params(course, auto_enroll):
     """
 
     stripped_site_name = settings.SITE_NAME
-    registration_url = 'https://' + stripped_site_name + reverse('student.views.register_user')
+    registration_url = 'http://' + stripped_site_name + reverse('student.views.register_user')
     is_shib_course = uses_shib(course)
 
     # Composition of email
@@ -195,8 +195,8 @@ def get_email_params(course, auto_enroll):
         'registration_url': registration_url,
         'course': course,
         'auto_enroll': auto_enroll,
-        'course_url': 'https://' + stripped_site_name + '/courses/' + course.id,
-        'course_about_url': 'https://' + stripped_site_name + '/courses/' + course.id + '/about',
+        'course_url': 'http://' + stripped_site_name + '/courses/' + course.id,
+        'course_about_url': 'http://' + stripped_site_name + '/courses/' + course.id + '/about',
         'is_shib_course': is_shib_course,
     }
     return email_params
