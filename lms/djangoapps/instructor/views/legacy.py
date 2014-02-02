@@ -1381,14 +1381,14 @@ def _do_enroll_students(course, course_id, students, overload=False, auto_enroll
             'SITE_NAME',
             settings.SITE_NAME
         )
-        registration_url = 'https://' + stripped_site_name + reverse('student.views.register_user')
+        registration_url = 'http://' + stripped_site_name + reverse('student.views.register_user')
         #Composition of email
         d = {'site_name': stripped_site_name,
              'registration_url': registration_url,
              'course': course,
              'auto_enroll': auto_enroll,
-             'course_url': 'https://' + stripped_site_name + '/courses/' + course_id,
-             'course_about_url': 'https://' + stripped_site_name + '/courses/' + course_id + '/about',
+             'course_url': 'http://' + stripped_site_name + '/courses/' + course_id,
+             'course_about_url': 'http://' + stripped_site_name + '/courses/' + course_id + '/about',
              'is_shib_course': is_shib_course
              }
 
