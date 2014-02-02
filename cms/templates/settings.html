@@ -88,13 +88,13 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
           <div class="note note-promotion note-promotion-courseURL has-actions">
             <h3 class="title">${_("Course Summary Page")} <span class="tip">${_("(for student enrollment and access)")}</span></h3>
             <div class="copy">
-              <p><a class="link-courseURL" rel="external" href="https:${lms_link_for_about_page}">https:${lms_link_for_about_page}</a></p>
+              <p><a class="link-courseURL" rel="external" href="http:${lms_link_for_about_page}">http:${lms_link_for_about_page}</a></p>
             </div>
 
             <ul class="list-actions">
               <li class="action-item">
                 <a title="${_('Send a note to students via email')}" 
-                    href="mailto:someone@domain.com?Subject=Enroll%20in%20${context_course.display_name_with_default}&body=The%20course%20&quot;${context_course.display_name_with_default}&quot;,%20provided%20by%20edX,%20is%20open%20for%20enrollment.%20Please%20navigate%20to%20this%20course%20at%20https:${lms_link_for_about_page}%20to%20enroll." class="action action-primary">
+                    href="mailto:someone@domain.com?Subject=Enroll%20in%20${context_course.display_name_with_default}&body=The%20course%20&quot;${context_course.display_name_with_default}&quot;,%20provided%20by%20MuddX,%20is%20open%20for%20enrollment.%20Please%20navigate%20to%20this%20course%20at%20http:${lms_link_for_about_page}%20to%20enroll." class="action action-primary">
                     <i class="icon-envelope-alt icon-inline"></i>${_("Invite your students")}</a>
               </li>
             </ul>
