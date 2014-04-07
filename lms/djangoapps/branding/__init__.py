@@ -63,7 +63,7 @@ def get_logo_url():
     university = microsite.get_value('university')
 
     if university is None:
-        return '{static_url}images/header-logo.pdf'.format(
+        return '{static_url}images/header-logo.png'.format(
             static_url=settings.STATIC_URL
         )
 
